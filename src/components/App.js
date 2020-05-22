@@ -5,15 +5,30 @@ import Search from "./Search/Search";
 const App = () => {
   const [search, setSearch] = useState("");
   const [animelist, setAnimelist] = useState([]);
+  const [offset, setOffset] = useState(0);
   useEffect(() => {
     (async () => {
+      setOffset(0);
       if (search) {
-        setAnimelist(await getTitlesByQuery(search));
+        setAnimelist(await getTitlesByQuery(search, offset));
       } else {
-        setAnimelist(await getPopularTitles());
+        setAnimelist(await getPopularTitles(offset));
       }
     })();
   }, [search]);
+
+  const loadMoreTitles = async () => {
+    setOffset(offset + 1);
+    if (search) {
+      const nextTitles = await getTitlesByQuery(search, offset + 1);
+      setAnimelist([...animelist, ...nextTitles]);
+    } else {
+      const nextTitles = await getPopularTitles(offset + 1);
+      setAnimelist([...animelist, ...nextTitles]);
+    }
+  };
+
+  console.log(animelist);
 
   return (
     <div>
@@ -26,6 +41,7 @@ const App = () => {
           </p>
         </div>
       ))}
+      <button onClick={loadMoreTitles}>Load more</button>
     </div>
   );
 };
