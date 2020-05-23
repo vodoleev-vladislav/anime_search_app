@@ -1,47 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { getPopularTitles, getTitlesByQuery } from "../services/anime";
 import Search from "./Search/Search";
+import Grid from "./Grid/Grid";
+import { getPopularTitles } from "../services/anime";
 
 const App = () => {
   const [search, setSearch] = useState("");
   const [animelist, setAnimelist] = useState([]);
   const [offset, setOffset] = useState(0);
-  useEffect(() => {
-    (async () => {
-      setOffset(0);
-      if (search) {
-        setAnimelist(await getTitlesByQuery(search, offset));
-      } else {
-        setAnimelist(await getPopularTitles(offset));
-      }
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [isNextPageLoading, setIsNextPageLoading] = useState(false);
+
+  const loadNextPage = async () => {
+    setIsNextPageLoading(true);
+    const response = await getPopularTitles(offset);
+    (() => {
+      setOffset(offset + 1);
+      setIsNextPageLoading(false);
+      setAnimelist([...animelist, ...response.animelist]);
+      setHasNextPage(response.hasNextPage);
     })();
-  }, [search]);
-
-  const loadMoreTitles = async () => {
-    setOffset(offset + 1);
-    if (search) {
-      const nextTitles = await getTitlesByQuery(search, offset + 1);
-      setAnimelist([...animelist, ...nextTitles]);
-    } else {
-      const nextTitles = await getPopularTitles(offset + 1);
-      setAnimelist([...animelist, ...nextTitles]);
-    }
   };
-
-  console.log(animelist);
 
   return (
     <div>
       <Search setSearch={setSearch} />
-      {animelist.map((anime) => (
-        <div style={{ display: "inline-block" }}>
-          <img src={anime.attributes.posterImage.small}></img>
-          <p>
-            {anime.attributes.titles.en}/{anime.attributes.titles.en_jp}
-          </p>
-        </div>
-      ))}
-      <button onClick={loadMoreTitles}>Load more</button>
+      <Grid
+        hasNextPage={hasNextPage}
+        isNextPageLoadinh={isNextPageLoading}
+        items={animelist}
+        loadNextPage={loadNextPage}
+      />
     </div>
   );
 };
