@@ -8,7 +8,6 @@ export const getPopularTitles = async (page) => {
   const queryString = `${BASE_URL}?&page[offset]=${
     page * PER_PAGE
   }&${LIMIT}&sort=-averageRating`;
-  // console.log(queryString);
   const response = await axios.get(queryString);
   const hasNextPage = response.data.links.last !== queryString;
   console.log("RETURNING NEW PAGE!!!!!!!!!", "page is", page);
