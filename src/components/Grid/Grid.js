@@ -1,7 +1,9 @@
 import React from "react";
-import { FixedSizeGrid as Grid } from "react-window";
+import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
+import Item from "../Item/Item";
+import RowStyled from "./RowStyled";
 
 const NUM_COLUMNS = 2;
 
@@ -12,25 +14,21 @@ const InfiniteGrid = ({
   loadNextPage,
 }) => {
   const itemCount = hasNextPage ? items.length + 10 : items.length;
-  const rowCount = itemCount / 2;
+  const rowCount = itemCount / NUM_COLUMNS;
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const isItemLoaded = (index) => !hasNextPage || index < items.length;
-
-  const Item = ({ columnIndex, rowIndex, style }) => {
-    const index = rowIndex * NUM_COLUMNS + columnIndex;
-    let content;
-    if (isItemLoaded(index)) {
-      content = (
-        <img
-          style={style}
-          src={items[index].attributes.posterImage.medium}
-        ></img>
-      );
-    } else {
-      content = <div style={style}>Loading ...</div>;
-    }
-
-    return <>{content}</>;
+  const Row = ({ index, style }) => {
+    if (!items[index]) return <div>Loading...</div>;
+    return (
+      <RowStyled styles={style}>
+        {/* <img src={items[index].attributes.posterImage.small}></img> */}
+        {items
+          .slice(index * NUM_COLUMNS, index * NUM_COLUMNS + NUM_COLUMNS)
+          .map((item) => (
+            <Item item={item} key={item.id} />
+          ))}
+      </RowStyled>
+    );
   };
 
   return (
@@ -40,31 +38,23 @@ const InfiniteGrid = ({
       loadMoreItems={loadMoreItems}
     >
       {({ onItemsRendered, ref }) => (
-        <AutoSizer style={{ height: "92vh", width: "95vw" }}>
+        <AutoSizer style={{ height: "95vh", width: "100%" }}>
           {({ height, width }) => (
-            <Grid
+            <List
               itemData={items}
-              onItemsRendered={(gridProps) => {
-                onItemsRendered({
-                  overscanStartIndex:
-                    gridProps.overscanRowStartIndex * NUM_COLUMNS,
-                  overscanStopIndex:
-                    gridProps.overscanRowStopIndex * NUM_COLUMNS,
-                  visibleStartIndex:
-                    gridProps.visibleRowStartIndex * NUM_COLUMNS,
-                  visibleStopIndex: gridProps.visibleRowStopIndex * NUM_COLUMNS,
-                });
-              }}
+              onItemsRendered={onItemsRendered}
               ref={ref}
               width={width}
               height={height}
-              columnWidth={(0.98 * width) / NUM_COLUMNS}
+              columnWidth={width / NUM_COLUMNS}
               columnCount={NUM_COLUMNS}
-              rowCount={rowCount}
+              itemCount={rowCount}
               rowHeight={height / NUM_COLUMNS}
+              outerElementType={"div"}
+              itemSize={height / NUM_COLUMNS}
             >
-              {Item}
-            </Grid>
+              {Row}
+            </List>
           )}
         </AutoSizer>
       )}
