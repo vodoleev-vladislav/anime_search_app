@@ -1,41 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Search from "./Search/Search";
-import Grid from "./Grid/Grid";
 import { getPopularTitles, getTitlesByQuery } from "../services/anime";
-// import { ThemeConsumer } from "styled-components";
-import CustomGrid from "./CustomGrid/CustomGrid";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-// const App = () => {
-//   const [search, setSearch] = useState("");
-//   const [animelist, setAnimelist] = useState([]);
-//   const [offset, setOffset] = useState(0);
-//   const [hasNextPage, setHasNextPage] = useState(true);
-//   const [isNextPageLoading, setIsNextPageLoading] = useState(false);
-
-//   const loadNextPage = async () => {
-//     setIsNextPageLoading(true);
-//     const response = await getPopularTitles(offset);
-//     (() => {
-//       setOffset(offset + 1);
-//       setIsNextPageLoading(false);
-//       setAnimelist([...animelist, ...response.animelist]);
-//       setHasNextPage(response.hasNextPage);
-//     })();
-//   };
-
-//   return (
-//     <div>
-//       <Search setSearch={setSearch} />
-//       <Grid
-//         hasNextPage={hasNextPage}
-//         isNextPageLoadinh={isNextPageLoading}
-//         items={animelist}
-//         loadNextPage={loadNextPage}
-//       />
-//     </div>
-//   );
-// };
+import Grid from "./Grid/Grid";
+import ItemPage from "../components/ItemPage/ItemPage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { uniqWith } from "lodash";
 
 class App extends React.Component {
   state = {
@@ -58,15 +27,15 @@ class App extends React.Component {
       await this.setState({
         offset: ++this.state.offset,
         isNextPageLoading: false,
-        animelist: [...this.state.animelist, ...response.animelist],
+        animelist: uniqWith(
+          [...this.state.animelist, ...response.animelist],
+          (a, b) => a.id === b.id
+        ),
+        // animelist: [...this.state.animelist, ...response.animelist],
         hasNextPage: response.hasNextPage,
       });
     }
   };
-
-  // componentDidMount() {
-  //   this.loadNextPage();
-  // }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.search !== prevState.search) {
@@ -81,21 +50,24 @@ class App extends React.Component {
   render() {
     const { hasNextPage, isNextPageLoading, animelist } = this.state;
     return (
-      <div>
-        <Search setSearch={this.setSearch} />
-        {/* <Grid
-          hasNextPage={hasNextPage}
-          isNextPageLoadinh={isNextPageLoading}
-          items={animelist}
-          loadNextPage={this.loadNextPage}
-        /> */}
-        <CustomGrid
-          hasNextPage={hasNextPage}
-          isNextPageLoadinh={isNextPageLoading}
-          items={animelist}
-          loadNextPage={this.loadNextPage}
-        />
-      </div>
+      <Router>
+        <div>
+          <Search setSearch={this.setSearch} />
+          <Switch>
+            <Route path="/title/:id">
+              <ItemPage items={animelist} />
+            </Route>
+            <Route path="/">
+              <Grid
+                hasNextPage={hasNextPage}
+                isNextPageLoadinh={isNextPageLoading}
+                items={animelist}
+                loadNextPage={this.loadNextPage}
+              />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }

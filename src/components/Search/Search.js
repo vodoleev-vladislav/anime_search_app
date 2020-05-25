@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import SearchStyled from "./SearchStyled";
 
 const Search = ({ setSearch }) => {
   const [query, setQuery] = useState("");
@@ -12,11 +13,13 @@ const Search = ({ setSearch }) => {
   };
 
   return (
-    <input
-      value={query}
-      onChange={setQueryTimeout}
-      style={{ display: "block" }}
-    />
+    <SearchStyled>
+      <input
+        value={query}
+        onChange={setQueryTimeout}
+        style={{ display: "block" }}
+      />
+    </SearchStyled>
   );
 };
 
