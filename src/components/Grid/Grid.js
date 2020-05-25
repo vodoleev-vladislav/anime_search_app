@@ -18,7 +18,7 @@ const InfiniteGrid = ({
   const rowCount = itemCount / COLUMNS;
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   // const isRowLoaded = (index) => !hasNextPage || index < items.length / 2;
-  const isRowLoaded = (index) => index < items.length / 2;
+  const isRowLoaded = (index) => index < items.length / COLUMNS;
   const Row = ({ index, style }) => {
     if (!items[index]) return <div>Loading...</div>;
     return (
@@ -34,7 +34,7 @@ const InfiniteGrid = ({
   return (
     <InfiniteLoader
       isItemLoaded={isRowLoaded}
-      itemCount={itemCount}
+      itemCount={rowCount}
       loadMoreItems={loadMoreItems}
     >
       {({ onItemsRendered, ref }) => (

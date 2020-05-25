@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Search from "./Search/Search";
 import Grid from "./Grid/Grid";
-import { getPopularTitles } from "../services/anime";
-import { ThemeConsumer } from "styled-components";
+import { getPopularTitles, getTitlesByQuery } from "../services/anime";
+// import { ThemeConsumer } from "styled-components";
+import CustomGrid from "./CustomGrid/CustomGrid";
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 // const App = () => {
 //   const [search, setSearch] = useState("");
@@ -47,7 +49,12 @@ class App extends React.Component {
   loadNextPage = async () => {
     if (!this.state.isNextPageLoading) {
       await this.setState({ isNextPageLoading: true });
-      const response = await getPopularTitles(this.state.offset);
+      let response;
+      if (!this.state.search) {
+        response = await getPopularTitles(this.state.offset);
+      } else {
+        response = await getTitlesByQuery(this.state.search, this.state.offset);
+      }
       await this.setState({
         offset: ++this.state.offset,
         isNextPageLoading: false,
@@ -56,6 +63,16 @@ class App extends React.Component {
       });
     }
   };
+
+  componentDidMount() {
+    this.loadNextPage();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.search !== prevState.search) {
+      this.setState({ offset: 0, animelist: [] });
+    }
+  }
 
   setSearch = (value) => {
     this.setState({ search: value });
@@ -66,7 +83,13 @@ class App extends React.Component {
     return (
       <div>
         <Search setSearch={this.setSearch} />
-        <Grid
+        {/* <Grid
+          hasNextPage={hasNextPage}
+          isNextPageLoadinh={isNextPageLoading}
+          items={animelist}
+          loadNextPage={this.loadNextPage}
+        /> */}
+        <CustomGrid
           hasNextPage={hasNextPage}
           isNextPageLoadinh={isNextPageLoading}
           items={animelist}

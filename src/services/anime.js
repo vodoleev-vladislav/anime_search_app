@@ -14,9 +14,14 @@ export const getPopularTitles = async (page) => {
   return { animelist: response.data.data, hasNextPage };
 };
 
-// export const getTitlesByQuery = async (query, page) => {
-//   const response = await axios.get(
-//     `${BASE_URL}?page[offset]=${page * PER_PAGE}&${LIMIT}&filter[text]=${query}`
-//   );
-//   return response.data.data;
-// };
+export const getTitlesByQuery = async (query, page) => {
+  const queryString = `${BASE_URL}?page[offset]=${
+    page * PER_PAGE
+  }&${LIMIT}&filter[text]=${query}`;
+  const response = await axios.get(queryString);
+  const hasNextPage = response.data.links.last !== queryString;
+  console.log("RETURNING NEW PAGE!!!!!!!!!", "page is", page);
+  // console.log(response.data.links.last);
+  // console.log(queryString);
+  return { animelist: response.data.data, hasNextPage };
+};
