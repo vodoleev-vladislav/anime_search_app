@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { getTitleById } from "../../services/anime";
 import ItemPageStyled from "./ItemPageStyled";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 const ItemPage = (props) => {
   const { id } = useParams();
   const [details, setDetails] = useState(null);
   useEffect(() => {
-    const item = props.items.find((item) => item.id === id);
-    if (item) setDetails(item);
+    (async () => {
+      const item = props.items.find((item) => item.id === id);
+      if (!item) {
+        console.log("fetching from api");
+        const response = await getTitleById(id);
+        setDetails(response);
+      } else {
+        console.log("getting from state");
+        setDetails(item);
+      }
+    })();
   }, [id, props.items]);
 
   if (!details) {
@@ -25,4 +36,10 @@ const ItemPage = (props) => {
   }
 };
 
-export default ItemPage;
+export default function ItemPageWithErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <ItemPage {...props} />
+    </ErrorBoundary>
+  );
+}

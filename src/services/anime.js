@@ -29,3 +29,13 @@ export const getTitlesByQuery = async (query, page) => {
   // console.log(queryString);
   return { animelist: response.data.data, hasNextPage };
 };
+
+export const getTitleById = async (id) => {
+  const queryString = `${BASE_URL}/${id}`;
+  try {
+    const response = await axios.get(queryString);
+    return { ...response.data.data };
+  } catch (error) {
+    return error.response.data;
+  }
+};
