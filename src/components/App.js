@@ -45,14 +45,16 @@ class App extends React.Component {
   };
 
   loadNextPage = async () => {
-    await this.setState({ isNextPageLoading: true });
-    const response = await getPopularTitles(this.state.offset);
-    await this.setState({
-      offset: ++this.state.offset,
-      isNextPageLoading: false,
-      animelist: [...this.state.animelist, ...response.animelist],
-      hasNextPage: response.hasNextPage,
-    });
+    if (!this.state.isNextPageLoading) {
+      await this.setState({ isNextPageLoading: true });
+      const response = await getPopularTitles(this.state.offset);
+      await this.setState({
+        offset: ++this.state.offset,
+        isNextPageLoading: false,
+        animelist: [...this.state.animelist, ...response.animelist],
+        hasNextPage: response.hasNextPage,
+      });
+    }
   };
 
   setSearch = (value) => {

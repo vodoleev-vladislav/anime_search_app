@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "https://kitsu.io/api/edge/anime";
-const PER_PAGE = 10;
+const PER_PAGE = 12;
 const LIMIT = `page[limit]=${PER_PAGE}`;
 
 export const getPopularTitles = async (page) => {
