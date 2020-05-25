@@ -64,9 +64,9 @@ class App extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.loadNextPage();
-  }
+  // componentDidMount() {
+  //   this.loadNextPage();
+  // }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.search !== prevState.search) {

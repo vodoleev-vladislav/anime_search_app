@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Item from "../Item/Item";
 import CustomGridStyled from "./CustomGridStyled";
+import { useInView } from "react-intersection-observer";
 
 const CustomGrid = ({
   hasNextPage,
@@ -8,21 +9,21 @@ const CustomGrid = ({
   items,
   loadNextPage,
 }) => {
+  const [ref, inView] = useInView();
   useEffect(() => {
-    const handleScroll = () => {
-      // console.log(window.innerHeight, window.scrollY, document.body.offsetHeight);
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight)
-        loadNextPage();
-    };
-    window.addEventListener("scroll", handleScroll);
-  }, [loadNextPage]);
+    if (inView && !isNextPageLoading) loadNextPage();
+  }, [inView, isNextPageLoading, loadNextPage]);
 
   return (
     <CustomGridStyled>
       {items.map((item) => (
-        <Item item={item} />
+        <Item key={item.id} item={item} />
       ))}
-      {isNextPageLoading || <div style={{ height: "50vh" }}>Loading...</div>}
+      {isNextPageLoading || (
+        <div style={{ height: "50vh" }} ref={ref}>
+          Loading...
+        </div>
+      )}
     </CustomGridStyled>
   );
 };
