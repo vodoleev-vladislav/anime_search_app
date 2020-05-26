@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import SearchStyled from "./SearchStyled";
 import Logo from "../Logo/Logo";
+import { default as StyledLink } from "../Link/StyledLink";
 
 const Search = ({ setSearch }) => {
   const [query, setQuery] = useState("");
@@ -15,7 +16,9 @@ const Search = ({ setSearch }) => {
 
   return (
     <SearchStyled>
-      <Logo />
+      <StyledLink to="/">
+        <Logo />
+      </StyledLink>
       <input
         value={query}
         onChange={setQueryTimeout}

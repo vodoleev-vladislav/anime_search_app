@@ -14,7 +14,7 @@ const LogoStyled = styled.h1`
   font-size: 3rem;
   font-family: "Permanent Marker", cursive;
   margin-left: 1rem;
-  margin-right: auto;
+  margin-right: 30vw;
 
   .first-word {
     color: greenyellow;

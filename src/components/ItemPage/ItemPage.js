@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import displayTitleName from "../../services/displayTitleName";
 import { getTitleById } from "../../services/anime";
 import ItemPageStyled from "./ItemPageStyled";
+import Item from "../Item/Item";
+import StyledLink from "../Link/StyledLink";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 const ItemPage = (props) => {
@@ -27,18 +29,27 @@ const ItemPage = (props) => {
     return <div>Loading...</div>;
   } else {
     return (
-      <ItemPageStyled background={details.attributes.coverImage.original}>
-        <img
-          className="poster"
-          src={details.attributes.posterImage.medium}
-          alt="poster"
-        />
-        <div className="description">
-          <h3 className="description__title">
-            {displayTitleName(details.attributes.titles)}
-          </h3>
+      <>
+        <ItemPageStyled background={details.attributes.coverImage.original}>
+          <img
+            className="poster"
+            src={details.attributes.posterImage.medium}
+            alt="poster"
+          />
+          <div className="description">
+            <h3 className="description__title">
+              {displayTitleName(details.attributes.titles)}
+            </h3>
+          </div>
+        </ItemPageStyled>
+        <div style={{ display: "flex" }}>
+          {props.items.slice(0, 5).map((item) => (
+            <StyledLink to={`/title/${item.id}`} key={item.id}>
+              <Item item={item} />
+            </StyledLink>
+          ))}
         </div>
-      </ItemPageStyled>
+      </>
     );
   }
 };

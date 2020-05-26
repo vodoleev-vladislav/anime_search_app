@@ -5,7 +5,6 @@ const SearchStyled = styled.header`
   height: 5rem;
   background-color: purple;
   display: flex;
-  justify-content: center;
   align-items: center;
 `;
 
