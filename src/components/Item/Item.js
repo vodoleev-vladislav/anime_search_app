@@ -6,7 +6,7 @@ const Item = ({ item }) => {
   return (
     <ItemStyled>
       <img src={item.attributes.posterImage.small} alt="anime"></img>
-      <p>{item.attributes.titles.en_jp}</p>
+      <p>{item.attributes.canonicalTitle}</p>
       <Rating rating={item.attributes.averageRating} />
     </ItemStyled>
   );

@@ -30,7 +30,12 @@ const ItemPage = (props) => {
   } else {
     return (
       <>
-        <ItemPageStyled background={details.attributes.coverImage.original}>
+        <ItemPageStyled
+          background={
+            details.attributes.coverImage &&
+            details.attributes.coverImage.original
+          }
+        >
           <img
             className="poster"
             src={details.attributes.posterImage.medium}
@@ -38,13 +43,17 @@ const ItemPage = (props) => {
           />
           <div className="description">
             <h3 className="description__title">
-              {displayTitleName(details.attributes.titles)}
+              {details.attributes.canonicalTitle}
             </h3>
           </div>
         </ItemPageStyled>
         <div style={{ display: "flex" }}>
           {props.items.slice(0, 5).map((item) => (
-            <StyledLink to={`/title/${item.id}`} key={item.id}>
+            <StyledLink
+              to={`/title/${item.id}`}
+              key={item.id}
+              onClick={() => setDetails(null)}
+            >
               <Item item={item} />
             </StyledLink>
           ))}

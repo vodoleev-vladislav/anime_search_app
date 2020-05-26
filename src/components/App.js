@@ -5,6 +5,33 @@ import Grid from "./Grid/Grid";
 import ItemPage from "../components/ItemPage/ItemPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { uniqWith } from "lodash";
+import { AnimatedSwitch, AnimatedRoute, spring } from "react-router-transition";
+
+const switchRule = `
+  position: relative;
+  & > div {
+    position: absolute;
+  }
+`;
+
+function glide(val) {
+  return spring(val, {
+    stiffness: 174,
+    damping: 24,
+  });
+}
+
+const pageTransitions = {
+  atEnter: {
+    offset: 100,
+  },
+  atLeave: {
+    offset: glide(-100),
+  },
+  atActive: {
+    offset: glide(0),
+  },
+};
 
 class App extends React.Component {
   state = {
@@ -53,10 +80,20 @@ class App extends React.Component {
       <Router>
         <div>
           <Search setSearch={this.setSearch} />
-          <Switch>
-            <Route path="/title/:id">
-              <ItemPage items={animelist} />
-            </Route>
+          <AnimatedSwitch
+            css={switchRule}
+            mapStyles={(styles) => ({
+              transform: `translateX(${styles.offset}%)`,
+            })}
+            {...pageTransitions}
+          >
+            <AnimatedRoute
+              path="/title/:id"
+              {...pageTransitions}
+              component={() => <ItemPage items={animelist} />}
+            >
+              {/* <ItemPage items={animelist} /> */}
+            </AnimatedRoute>
             <Route path="/">
               <Grid
                 hasNextPage={hasNextPage}
@@ -65,7 +102,7 @@ class App extends React.Component {
                 loadNextPage={this.loadNextPage}
               />
             </Route>
-          </Switch>
+          </AnimatedSwitch>
         </div>
       </Router>
     );
