@@ -10,7 +10,7 @@ const CustomGrid = ({
   items,
   loadNextPage,
 }) => {
-  const [ref, inView] = useInView();
+  const [ref, inView] = useInView({ threshold: 0.1 });
   useEffect(() => {
     if (inView && !isNextPageLoading) loadNextPage();
   }, [inView, isNextPageLoading, loadNextPage]);

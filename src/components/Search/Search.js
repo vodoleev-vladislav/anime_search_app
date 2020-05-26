@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import SearchStyled from "./SearchStyled";
+import Logo from "../Logo/Logo";
 
 const Search = ({ setSearch }) => {
   const [query, setQuery] = useState("");
@@ -14,6 +15,7 @@ const Search = ({ setSearch }) => {
 
   return (
     <SearchStyled>
+      <Logo />
       <input
         value={query}
         onChange={setQueryTimeout}
