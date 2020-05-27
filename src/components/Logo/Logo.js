@@ -17,7 +17,7 @@ const LogoStyled = styled.h1`
   margin-right: 30vw;
 
   .first-word {
-    color: greenyellow;
+    color: ${(props) => props.theme.colors.secondary};
   }
 
   .second-word {

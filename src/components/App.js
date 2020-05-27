@@ -98,7 +98,7 @@ class App extends React.Component {
             <Route path="/">
               <Grid
                 hasNextPage={hasNextPage}
-                isNextPageLoadinh={isNextPageLoading}
+                isNextPageLoading={isNextPageLoading}
                 items={animelist}
                 loadNextPage={this.loadNextPage}
               />

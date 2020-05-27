@@ -4,8 +4,8 @@ import { ThemeProvider } from "styled-components";
 const theme = {
   colors: {
     primary: "#812fff",
-    primaryDark: "#5900e2",
-    secondary: "#adff2f",
+    primaryDark: "#3b0096",
+    secondary: "#45ff2f",
   },
   fontSizes: {
     small: "1rem",

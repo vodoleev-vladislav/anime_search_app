@@ -1,45 +1,58 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+const colors = {
+  green: {
+    bright: "#45ff2f",
+    dark: "#13af00",
+  },
+  yellow: {
+    bright: "#ffff00",
+    dark: "#b3b300",
+  },
+  red: {
+    bright: "#ff0000",
+    dark: "#b30000",
+  },
+};
+
 const Rating = (props) => {
   const [offset, setOffset] = useState(0);
   const { rating } = props;
-  const size = 100;
-  const strokeWidth = 5;
-  const circleOneStroke = "#fff";
-  const circleTwoStroke = "#7ea9e1";
-  const circleBackgroundFill = "#111";
+  const size = 50;
+  const strokeWidth = size * 0.1;
   const center = size / 2;
   const radiusMain = size / 2 - strokeWidth / 2;
   const radius = radiusMain * 0.8;
   const circumference = 2 * Math.PI * radius;
+
+  const chooseCircleColors = () => {
+    if (rating < 50) return colors.red;
+    if (rating < 75) return colors.yellow;
+    return colors.green;
+  };
 
   useEffect(() => {
     const ratingOffset = ((100 - rating) / 100) * circumference;
     setOffset(ratingOffset);
   }, [setOffset, circumference, rating, offset]);
 
+  if (!rating) return null;
+
   return (
     <>
-      <RatingStyled width={size} height={size}>
+      <RatingStyled width={size} height={size} colors={chooseCircleColors()}>
+        <circle className="background" cx={center} cy={center} r={radiusMain} />
         <circle
-          fill={circleBackgroundFill}
-          cx={center}
-          cy={center}
-          r={radiusMain}
-        />
-        <circle
-          className="svg-circle-bg"
-          stroke={circleOneStroke}
+          className="circle-bg"
           cx={center}
           cy={center}
           r={radius}
           strokeWidth={strokeWidth}
         />
         <circle
-          transform="rotate(-90 50 50)"
-          className="svg-circle"
-          stroke={circleTwoStroke}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          className="circle"
           cx={center}
           cy={center}
           r={radius}
@@ -48,13 +61,14 @@ const Rating = (props) => {
           strokeDashoffset={offset}
         />
         <text
-          className="svg-circle-text"
-          alignmentBaseline="central"
+          className="text"
           x={center}
           y={center}
-          // transform="translate(-50,-50)"
+          alignmentBaseline="central"
+          textAnchor="middle"
         >
-          {rating}%
+          {Math.round(rating)}
+          <tspan className="percentage">%</tspan>
         </text>
       </RatingStyled>
     </>
@@ -63,26 +77,31 @@ const Rating = (props) => {
 
 const RatingStyled = styled.svg`
   display: block;
-  /* margin: 20px auto; */
   max-width: 100%;
   position: relative;
 
-  .svg-circle-bg {
+  .background {
+    fill: ${(props) => props.theme.colors.primaryDark};
+  }
+
+  .circle-bg {
+    stroke: ${(props) => props.colors.dark};
     fill: none;
   }
 
-  .svg-circle {
+  .circle {
+    stroke: ${(props) => props.colors.bright};
     fill: none;
   }
-  .svg-circle-text {
-    font-size: 2rem;
-    text-anchor: middle;
+  .text {
+    font-size: ${(props) => `${props.height / 3}px`};
+
     fill: #fff;
     font-weight: bold;
-    /* position: absolute;
-    top: 50%;
-    left: 50%; */
-    /* transform: translate(-50%, -50%); */
+  }
+
+  .percentage {
+    font-size: ${(props) => `${props.height / 6}px`};
   }
 `;
 
