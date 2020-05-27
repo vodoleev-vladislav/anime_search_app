@@ -19,7 +19,7 @@ const colors = {
 const Rating = (props) => {
   const [offset, setOffset] = useState(0);
   const { rating } = props;
-  const size = 50;
+  const size = 75;
   const strokeWidth = size * 0.1;
   const center = size / 2;
   const radiusMain = size / 2 - strokeWidth / 2;
@@ -65,6 +65,7 @@ const Rating = (props) => {
           x={center}
           y={center}
           alignmentBaseline="central"
+          dominantBaseline="central"
           textAnchor="middle"
         >
           {Math.round(rating)}
@@ -79,6 +80,7 @@ const RatingStyled = styled.svg`
   display: block;
   max-width: 100%;
   position: relative;
+  font-family: "Asap", sans-serif;
 
   .background {
     fill: ${(props) => props.theme.colors.primaryDark};

@@ -7,9 +7,10 @@ const ItemStyled = styled.div`
   border: 1px solid black;
   padding: 1rem;
   height: 30rem;
-  width: 55rem;
+  width: 58rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
   transition: all 0.2s;
+  font-family: "Asap", sans-serif;
 
   &:hover {
     transform: scale(1.05);
@@ -39,6 +40,7 @@ const ItemStyled = styled.div`
 
     &__title {
       font-size: ${(props) => props.theme.fontSizes.large};
+      font-weight: 700;
       /* display: block; */
       /* align-self: center; */
       text-align: center;
