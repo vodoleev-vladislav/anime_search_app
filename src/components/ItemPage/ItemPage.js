@@ -48,7 +48,7 @@ const ItemPage = (props) => {
           </div>
         </ItemPageStyled>
         <div style={{ display: "flex" }}>
-          {props.items.slice(0, 5).map((item) => (
+          {props.items.slice(0, 3).map((item) => (
             <StyledLink
               to={`/title/${item.id}`}
               key={item.id}

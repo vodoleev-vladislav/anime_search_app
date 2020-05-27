@@ -6,6 +6,7 @@ import ItemPage from "../components/ItemPage/ItemPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { uniqWith } from "lodash";
 import { AnimatedSwitch, AnimatedRoute, spring } from "react-router-transition";
+import Theme from "./Theme";
 
 const switchRule = `
   position: relative;
@@ -77,8 +78,8 @@ class App extends React.Component {
   render() {
     const { hasNextPage, isNextPageLoading, animelist } = this.state;
     return (
-      <Router>
-        <div>
+      <Theme>
+        <Router>
           <Search setSearch={this.setSearch} />
           <AnimatedSwitch
             css={switchRule}
@@ -103,8 +104,8 @@ class App extends React.Component {
               />
             </Route>
           </AnimatedSwitch>
-        </div>
-      </Router>
+        </Router>
+      </Theme>
     );
   }
 }
