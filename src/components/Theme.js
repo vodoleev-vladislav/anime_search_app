@@ -8,7 +8,7 @@ const theme = {
     secondary: "#45ff2f",
   },
   fontSizes: {
-    small: "1rem",
+    small: "1.5rem",
     medium: "2rem",
     large: "3rem",
   },

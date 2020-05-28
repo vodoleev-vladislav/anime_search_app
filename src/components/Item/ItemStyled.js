@@ -19,7 +19,7 @@ const ItemStyled = styled.div`
   img {
     display: block;
     max-height: 100%;
-    border-radius: 2rem;
+    border-radius: 1rem;
   }
 
   .info {

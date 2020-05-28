@@ -22,7 +22,7 @@ const CustomGrid = ({
           <Item item={item} />
         </StyledLink>
       ))}
-      {isNextPageLoading || (
+      {!isNextPageLoading && (
         <div style={{ height: "25vh", backgroundColor: "orangered" }} ref={ref}>
           Loading...
         </div>
