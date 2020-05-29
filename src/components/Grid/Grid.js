@@ -18,7 +18,7 @@ const CustomGrid = ({
   return (
     <GridStyled>
       {items.map((item) => (
-        <StyledLink to={`/title/${item.id}`} key={item.id}>
+        <StyledLink to={`/anime/${item.id}`} key={item.id}>
           <Item item={item} />
         </StyledLink>
       ))}

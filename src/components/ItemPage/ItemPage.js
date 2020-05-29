@@ -8,6 +8,16 @@ import StyledLink from "../Link/StyledLink";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Rating from "../Rating/Rating";
 
+const getAltTitles = ({ titles, canonicalTitle }) => {
+  const altTitles = Object.keys(titles).reduce((result, key) => {
+    if (titles[key] === canonicalTitle || key.includes("ja")) {
+      return result;
+    }
+    return result.concat(key);
+  }, []);
+  return altTitles;
+};
+
 const ItemPage = (props) => {
   const { id } = useParams();
   const [details, setDetails] = useState(null);
@@ -25,16 +35,20 @@ const ItemPage = (props) => {
     })();
   }, [id, props.items]);
 
-  console.log(details);
-  if (!details) {
-    return <div>Loading...</div>;
-  } else {
-    const startDate = new Date(details.attributes.startDate);
+  const altTitles = details ? getAltTitles(details.attributes) : null;
+  const formatDate = (date) => {
+    const startDate = new Date(date);
     const formattedDate = startDate.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "short",
       year: "numeric",
     });
+    return formattedDate;
+  };
+
+  if (!details) {
+    return <div>Loading...</div>;
+  } else {
     return (
       <>
         <ItemPageStyled
@@ -49,15 +63,50 @@ const ItemPage = (props) => {
             alt="poster"
           />
           <div className="details">
-            <h3 className="details__title">
-              {details.attributes.canonicalTitle}
-            </h3>
+            <div className="details__title">
+              <h3 className="details__title-main">
+                {details.attributes.canonicalTitle}
+              </h3>
+              <ul className="details__title-alts">
+                {altTitles &&
+                  altTitles.map((key) => (
+                    <li key={key} className="details__title-alt">
+                      <strong>{key.toUpperCase()}: </strong>
+                      {details.attributes.titles[key]}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+
+            <p>
+              <strong>Show Type: </strong>
+              {details.attributes.showType}
+            </p>
+
+            <p>
+              <strong>Status:</strong>{" "}
+              {details.attributes.status === "current"
+                ? "ongoing"
+                : details.attributes.status}
+            </p>
+
+            {details.attributes.episodeCount && (
+              <p>
+                <strong>Episodes:</strong> {details.attributes.episodeCount}
+              </p>
+            )}
+
             <p className="details__age-rating">
               <strong>Age Rating:</strong> {details.attributes.ageRating} -{" "}
               {details.attributes.ageRatingGuide}
             </p>
             <p>
-              <strong>Start Date:</strong> {formattedDate}
+              <strong>Start Date:</strong>{" "}
+              {formatDate(details.attributes.startDate)}
+            </p>
+            <p>
+              <strong>End Date:</strong>{" "}
+              {formatDate(details.attributes.endDate)}
             </p>
             <div className="details__rating-box">
               <Rating rating={details.attributes.averageRating} />

@@ -5,8 +5,8 @@ export default styled.div`
   padding: 4rem;
   background-image: linear-gradient(
       to right,
-      rgba(50, 50, 50, 0.7),
-      rgba(50, 50, 50, 0.5)
+      rgba(25, 25, 25, 0.7),
+      rgba(25, 25, 25, 0.5)
     ),
     url(${(props) => props.background || ""});
   background-size: cover;
@@ -36,12 +36,26 @@ export default styled.div`
     &__title {
       font-size: ${(props) => props.theme.fontSizes.large};
       margin-top: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
+      
+      &-main {
+        margin-bottom: .5rem;
+      }
+
+      &-alts {
+        list-style: none;
+      }
+
+      &-alt {
+        font-size: ${(props) => props.theme.fontSizes.small};
+      }
     }
     &__rating {
+      
       &-box {
         display: flex;
         align-items: center;
+        margin: 1rem 0;
       }
       &-text {
         font-size: ${(props) => props.theme.fontSizes.medium};
@@ -49,7 +63,6 @@ export default styled.div`
     }
     &__overview {
       font-size: ${(props) => props.theme.fontSizes.medium};
-      margin-top: 2rem;
       margin-bottom: 1rem;
     }
   }

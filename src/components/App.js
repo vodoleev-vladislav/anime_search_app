@@ -89,7 +89,7 @@ class App extends React.Component {
             {...pageTransitions}
           >
             <AnimatedRoute
-              path="/title/:id"
+              path="/anime/:id"
               {...pageTransitions}
               component={() => <ItemPage items={animelist} />}
             >
