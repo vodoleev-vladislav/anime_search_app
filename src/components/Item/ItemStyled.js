@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const ItemStyled = styled.div`
   display: flex;
-  background-color: #eee;
+  /* background-color: #eee; */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 2rem;
   border: 1px solid black;
   padding: 1rem;
