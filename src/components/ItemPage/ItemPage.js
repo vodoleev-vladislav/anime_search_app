@@ -23,15 +23,15 @@ const ItemPage = (props) => {
   const [details, setDetails] = useState(null);
   useEffect(() => {
     (async () => {
-      // const item = props.items.find((item) => item.id === id);
-      // if (!item) {
-      console.log("fetching from api");
-      const response = await getTitleById(id);
-      setDetails(response);
-      // } else {
-      //   console.log("getting from state");
-      //   setDetails(item);
-      // }
+      const item = props.items.find((item) => item.id === id);
+      if (!item) {
+        console.log("fetching from api");
+        const response = await getTitleById(id);
+        setDetails(response);
+      } else {
+        console.log("getting from state");
+        setDetails(item);
+      }
     })();
   }, [id, props.items]);
 

@@ -2,6 +2,7 @@ import React from "react";
 import Search from "./Search/Search";
 import { getPopularTitles, getTitlesByQuery } from "../services/anime";
 import Grid from "./Grid/Grid";
+import GridBG from "./GridBG/GridBG";
 import ItemPage from "../components/ItemPage/ItemPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { uniqWith } from "lodash";
@@ -102,6 +103,15 @@ class App extends React.Component {
                 items={animelist}
                 loadNextPage={this.loadNextPage}
               />
+              {/* {this.state.animelist.length !== 0 && (
+                <GridBG
+                  item={
+                    this.state.animelist[
+                      Math.round(Math.random() * this.state.animelist.length)
+                    ]
+                  }
+                />
+              )} */}
             </Route>
           </AnimatedSwitch>
         </Router>

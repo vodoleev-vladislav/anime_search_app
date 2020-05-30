@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Item from "../Item/Item";
 import GridStyled from "./GridStyled";
+import GridBG from "../GridBG/GridBG";
 import { default as StyledLink } from "../Link/StyledLink";
 import { useInView } from "react-intersection-observer";
 
@@ -15,8 +16,17 @@ const CustomGrid = ({
     if (inView && !isNextPageLoading) loadNextPage();
   }, [inView, isNextPageLoading, loadNextPage]);
 
+  console.log(items[Math.round(Math.random() * items.length)]);
+
   return (
-    <GridStyled>
+    <GridStyled
+      background={
+        items.length !== 0
+          ? items[Math.round(Math.random() * items.length)].attributes
+              .coverImage.original
+          : null
+      }
+    >
       {items.map((item) => (
         <StyledLink to={`/anime/${item.id}`} key={item.id}>
           <Item item={item} />
@@ -27,6 +37,9 @@ const CustomGrid = ({
           Loading...
         </div>
       )}
+      {/* {items.length !== 0 && (
+        <GridBG item={items[Math.round(Math.random() * items.length)]} />
+      )} */}
     </GridStyled>
   );
 };
