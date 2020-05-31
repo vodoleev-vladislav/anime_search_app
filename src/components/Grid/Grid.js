@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Item from "../Item/Item";
 import GridStyled from "./GridStyled";
 import GridBG from "../GridBG/GridBG";
@@ -12,21 +12,36 @@ const CustomGrid = ({
   loadNextPage,
 }) => {
   const [ref, inView] = useInView({ threshold: 0.1 });
+  const [bg, setBg] = useState(null);
+
   useEffect(() => {
     if (inView && !isNextPageLoading) loadNextPage();
   }, [inView, isNextPageLoading, loadNextPage]);
 
-  console.log(items[Math.round(Math.random() * items.length)]);
+  useEffect(() => {
+    if (!bg && items.length !== 0) {
+      const posters = items.reduce(
+        (result, item) =>
+          item.attributes.coverImage
+            ? [...result, item.attributes.coverImage.original]
+            : result,
+        []
+      );
+      if (posters.length !== 0) {
+        const randomPoster =
+          posters[Math.floor(Math.random() * posters.length)];
+        setBg(randomPoster);
+      } else {
+        setBg(null);
+      }
+    }
+    if (items.length === 0) {
+      setBg(null);
+    }
+  }, [items, bg]);
 
   return (
-    <GridStyled
-      background={
-        items.length !== 0
-          ? items[Math.round(Math.random() * items.length)].attributes
-              .coverImage.original
-          : null
-      }
-    >
+    <GridStyled background={bg}>
       {items.map((item) => (
         <StyledLink to={`/anime/${item.id}`} key={item.id}>
           <Item item={item} />

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const GridStyled = styled.div`
   /* position: relative; */
+  min-height: 95vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2rem;

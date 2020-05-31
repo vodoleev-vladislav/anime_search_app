@@ -36,7 +36,7 @@ const Item = ({ item }) => {
               <strong>Age Rating:</strong> {item.attributes.ageRating}
             </p>
             <p>
-              <strong>Start Date:</strong> {formattedDate}
+              <strong>Start:</strong> {formattedDate}
             </p>
           </div>
           <div className="info__rating-box">
