@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { uniqWith } from "lodash";
 import { AnimatedSwitch, AnimatedRoute, spring } from "react-router-transition";
 import Theme from "./Theme";
+import GlobalStyle from "./GlobalStyle";
 
 const switchRule = `
   position: relative;
@@ -80,6 +81,7 @@ class App extends React.Component {
     const { hasNextPage, isNextPageLoading, animelist } = this.state;
     return (
       <Theme>
+        <GlobalStyle />
         <Router>
           <Search setSearch={this.setSearch} />
           <AnimatedSwitch

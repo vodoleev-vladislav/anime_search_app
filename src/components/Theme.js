@@ -12,6 +12,12 @@ const theme = {
     medium: "2rem",
     large: "3rem",
   },
+  breakpoints: {
+    large: "1550px",
+    medium: "1100px",
+    mediumSmall: "800px",
+    small: "630px",
+  },
 };
 
 const Theme = ({ children }) => (

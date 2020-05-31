@@ -19,7 +19,7 @@ const colors = {
 const Rating = (props) => {
   const [offset, setOffset] = useState(0);
   const { rating } = props;
-  const size = 75;
+  const size = 40;
   const strokeWidth = size * 0.1;
   const center = size / 2;
   const radiusMain = size / 2 - strokeWidth / 2;

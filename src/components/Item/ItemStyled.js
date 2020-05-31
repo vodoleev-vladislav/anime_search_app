@@ -8,10 +8,20 @@ const ItemStyled = styled.div`
   border: 1px solid black;
   padding: 1rem;
   height: 30rem;
-  width: 55rem;
+  width: max(40rem, 30vw);
+  /* height: 30vh;
+  width: 30vw; */
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
   transition: all 0.2s;
   font-family: "Asap", sans-serif;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.large}) {
+    width: max(40rem, 45vw);
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.small}) {
+    width: max(48rem, 80vw);
+  }
 
   &:hover {
     transform: scale(1.05);
