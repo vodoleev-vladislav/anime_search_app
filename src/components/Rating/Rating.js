@@ -16,15 +16,10 @@ const colors = {
   },
 };
 
-const Rating = (props) => {
+const Rating = React.memo((props) => {
   const [offset, setOffset] = useState(0);
   const { rating } = props;
-  const size = 40;
-  const strokeWidth = size * 0.1;
-  const center = size / 2;
-  const radiusMain = size / 2 - strokeWidth / 2;
-  const radius = radiusMain * 0.8;
-  const circumference = 2 * Math.PI * radius;
+  const circumference = 2 * Math.PI * 42;
 
   const chooseCircleColors = () => {
     if (rating < 50) return colors.red;
@@ -40,30 +35,30 @@ const Rating = (props) => {
   if (!rating) return null;
 
   return (
-    <>
-      <RatingStyled width={size} height={size} colors={chooseCircleColors()}>
-        <circle className="background" cx={center} cy={center} r={radiusMain} />
+    <RatingStyled colors={chooseCircleColors()}>
+      <svg className="svg-container">
+        <circle className="background" cx="50%" cy="50%" r="50%" />
         <circle
           className="circle-bg"
-          cx={center}
-          cy={center}
-          r={radius}
-          strokeWidth={strokeWidth}
+          cx="50%"
+          cy="50%"
+          r="42%"
+          strokeWidth="8%"
         />
         <circle
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          transform={`rotate(-90 50% 50%`}
           className="circle"
-          cx={center}
-          cy={center}
-          r={radius}
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
+          cx="50%"
+          cy="50%"
+          r="42%"
+          strokeWidth="8%"
+          strokeDasharray={`${circumference}%`}
+          strokeDashoffset={`${offset}%`}
         />
         <text
           className="text"
-          x={center}
-          y={center}
+          x="50%"
+          y="50%"
           alignmentBaseline="central"
           dominantBaseline="central"
           textAnchor="middle"
@@ -71,16 +66,22 @@ const Rating = (props) => {
           {Math.round(rating)}
           <tspan className="percentage">%</tspan>
         </text>
-      </RatingStyled>
-    </>
+      </svg>
+    </RatingStyled>
   );
-};
+});
 
-const RatingStyled = styled.svg`
-  display: block;
-  max-width: 100%;
-  position: relative;
-  font-family: "Asap", sans-serif;
+const RatingStyled = styled.div`
+  height: 7rem;
+  width: 7rem;
+  .svg-container {
+    display: block;
+    max-width: 100%;
+    position: relative;
+    font-family: "Asap", sans-serif;
+    height: 100%;
+    width: 100%;
+  }
 
   .background {
     fill: ${(props) => props.theme.colors.primaryDark};
@@ -96,14 +97,13 @@ const RatingStyled = styled.svg`
     fill: none;
   }
   .text {
-    font-size: ${(props) => `${props.height / 3}px`};
-
+    font-size: ${(props) => props.theme.fontSizes.large};
     fill: #fff;
     font-weight: bold;
   }
 
   .percentage {
-    font-size: ${(props) => `${props.height / 6}px`};
+    font-size: ${(props) => props.theme.fontSizes.medium};
   }
 `;
 
