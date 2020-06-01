@@ -19,11 +19,11 @@ const Search = ({ setSearch }) => {
       <StyledLink to="/">
         <Logo />
       </StyledLink>
-      <input
+      {/* <input
         value={query}
         onChange={setQueryTimeout}
         style={{ display: "block" }}
-      />
+      /> */}
     </SearchStyled>
   );
 };

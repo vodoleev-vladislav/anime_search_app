@@ -72,8 +72,8 @@ const Rating = React.memo((props) => {
 });
 
 const RatingStyled = styled.div`
-  height: 7rem;
-  width: 7rem;
+  height: 6rem;
+  width: 6rem;
   .svg-container {
     display: block;
     max-width: 100%;
@@ -97,13 +97,13 @@ const RatingStyled = styled.div`
     fill: none;
   }
   .text {
-    font-size: ${(props) => props.theme.fontSizes.large};
+    font-size: ${(props) => props.theme.fontSizes.medium};
     fill: #fff;
     font-weight: bold;
   }
 
   .percentage {
-    font-size: ${(props) => props.theme.fontSizes.medium};
+    font-size: ${(props) => props.theme.fontSizes.small};
   }
 `;
 

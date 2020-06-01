@@ -8,15 +8,15 @@ const theme = {
     secondary: "#45ff2f",
   },
   fontSizes: {
-    small: "1.5rem",
-    medium: "2rem",
+    small: "2rem",
+    medium: "2.5rem",
     large: "3rem",
   },
   breakpoints: {
-    large: "1550px",
+    large: "1700px",
     medium: "1100px",
-    mediumSmall: "800px",
-    small: "630px",
+    mediumSmall: "900px",
+    small: "680px",
   },
 };
 

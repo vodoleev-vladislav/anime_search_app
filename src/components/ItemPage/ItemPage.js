@@ -57,11 +57,14 @@ const ItemPage = (props) => {
             details.attributes.coverImage.original
           }
         >
-          <img
-            className="poster"
-            src={details.attributes.posterImage.medium}
-            alt="poster"
-          />
+          <div className="poster__container">
+            <img
+              className="poster"
+              src={details.attributes.posterImage.medium}
+              alt="poster"
+            />
+          </div>
+
           <div className="details">
             <div className="details__title">
               <h3 className="details__title-main">
