@@ -6,35 +6,9 @@ import GridBG from "./GridBG/GridBG";
 import ItemPage from "../components/ItemPage/ItemPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { uniqWith } from "lodash";
-import { AnimatedSwitch, AnimatedRoute, spring } from "react-router-transition";
+import AnimatedSwitch from "./AnimatedSwitch/AnimatedSwitch";
 import Theme from "./Theme";
 import GlobalStyle from "./GlobalStyle";
-
-const switchRule = `
-  position: relative;
-  & > div {
-    position: absolute;
-  }
-`;
-
-function glide(val) {
-  return spring(val, {
-    stiffness: 174,
-    damping: 24,
-  });
-}
-
-const pageTransitions = {
-  atEnter: {
-    offset: 100,
-  },
-  atLeave: {
-    offset: glide(-100),
-  },
-  atActive: {
-    offset: glide(0),
-  },
-};
 
 class App extends React.Component {
   state = {
@@ -84,20 +58,10 @@ class App extends React.Component {
         <GlobalStyle />
         <Router>
           <Search setSearch={this.setSearch} />
-          <AnimatedSwitch
-            css={switchRule}
-            mapStyles={(styles) => ({
-              transform: `translateX(${styles.offset}%)`,
-            })}
-            {...pageTransitions}
-          >
-            <AnimatedRoute
-              path="/anime/:id"
-              {...pageTransitions}
-              component={() => <ItemPage items={animelist} />}
-            >
-              {/* <ItemPage items={animelist} /> */}
-            </AnimatedRoute>
+          <AnimatedSwitch>
+            <Route path="/anime/:id">
+              <ItemPage items={animelist} />
+            </Route>
             <Route path="/">
               <Grid
                 hasNextPage={hasNextPage}
@@ -105,15 +69,6 @@ class App extends React.Component {
                 items={animelist}
                 loadNextPage={this.loadNextPage}
               />
-              {/* {this.state.animelist.length !== 0 && (
-                <GridBG
-                  item={
-                    this.state.animelist[
-                      Math.round(Math.random() * this.state.animelist.length)
-                    ]
-                  }
-                />
-              )} */}
             </Route>
           </AnimatedSwitch>
         </Router>
