@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Item from "../Item/Item";
 import GridStyled from "./GridStyled";
-import GridBG from "../GridBG/GridBG";
 import { default as StyledLink } from "../Link/StyledLink";
-import { useInView } from "react-intersection-observer";
+import { useInView, InView } from "react-intersection-observer";
 
 const CustomGrid = ({
   hasNextPage,
@@ -11,12 +10,15 @@ const CustomGrid = ({
   items,
   loadNextPage,
 }) => {
-  const [ref, inView] = useInView({ threshold: 0.1 });
+  // const [ref, inView] = useInView({ threshold: 0.1 });
   const [bg, setBg] = useState(null);
-
-  useEffect(() => {
+  const fetchItems = (inView) => {
     if (inView && !isNextPageLoading) loadNextPage();
-  }, [inView, isNextPageLoading, loadNextPage]);
+  };
+
+  // useEffect(() => {
+  //   if (inView && !isNextPageLoading) loadNextPage();
+  // }, [inView, isNextPageLoading, loadNextPage]);
 
   useEffect(() => {
     if (!bg && items.length !== 0) {
@@ -42,19 +44,27 @@ const CustomGrid = ({
 
   return (
     <GridStyled background={bg}>
-      {items.map((item) => (
-        <StyledLink to={`/anime/${item.id}`} key={item.id}>
-          <Item item={item} />
-        </StyledLink>
-      ))}
-      {!isNextPageLoading && (
-        <div style={{ height: "25vh", backgroundColor: "orangered" }} ref={ref}>
-          Loading...
-        </div>
+      {items.map((item, index) => {
+        if (index === items.length - 1) {
+          return (
+            <InView as="div" onChange={(inView, entry) => fetchItems(inView)}>
+              <StyledLink to={`/anime/${item.id}`} key={item.id}>
+                <Item item={item} />
+              </StyledLink>
+            </InView>
+          );
+        }
+        return (
+          <StyledLink to={`/anime/${item.id}`} key={item.id}>
+            <Item item={item} />
+          </StyledLink>
+        );
+      })}
+      {(isNextPageLoading || items.length === 0) && (
+        <InView as="div" onChange={(inView, entry) => fetchItems(inView)}>
+          <Item />
+        </InView>
       )}
-      {/* {items.length !== 0 && (
-        <GridBG item={items[Math.round(Math.random() * items.length)]} />
-      )} */}
     </GridStyled>
   );
 };

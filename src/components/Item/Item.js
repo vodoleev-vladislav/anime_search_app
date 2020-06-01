@@ -1,8 +1,17 @@
 import React from "react";
 import ItemStyled from "./ItemStyled";
 import Rating from "../Rating/Rating";
+import Loader from "../Loader/Loader";
 
 const Item = ({ item }) => {
+  if (!item) {
+    return (
+      <ItemStyled>
+        <Loader />
+      </ItemStyled>
+    );
+  }
+
   const startDate = new Date(item.attributes.startDate);
   const formattedDate = startDate.toLocaleDateString("en-GB", {
     day: "2-digit",

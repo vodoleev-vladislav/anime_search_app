@@ -46,7 +46,6 @@ const Rating = React.memo((props) => {
           strokeWidth="8%"
         />
         <circle
-          transform={`rotate(-90 50% 50%`}
           className="circle"
           cx="50%"
           cy="50%"
@@ -95,6 +94,8 @@ const RatingStyled = styled.div`
   .circle {
     stroke: ${(props) => props.colors.bright};
     fill: none;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
   }
   .text {
     font-size: ${(props) => props.theme.fontSizes.medium};

@@ -2,7 +2,6 @@ import React from "react";
 import Search from "./Search/Search";
 import { getPopularTitles, getTitlesByQuery } from "../services/anime";
 import Grid from "./Grid/Grid";
-import GridBG from "./GridBG/GridBG";
 import ItemPage from "../components/ItemPage/ItemPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { uniqWith } from "lodash";
