@@ -18,7 +18,7 @@ export default styled.div`
   font-family: "Asap", sans-serif;
   color: #fff;
   font-size: ${(props) => props.theme.fontSizes.small};
-  height: 95vh;
+  min-height: 95vh;
 
   .poster {
     min-width: 25vw;

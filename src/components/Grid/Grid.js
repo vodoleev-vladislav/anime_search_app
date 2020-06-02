@@ -12,9 +12,6 @@ const CustomGrid = ({
 }) => {
   const [ref, inView] = useInView({ threshold: 0.1 });
   const [bg, setBg] = useState(null);
-  // const fetchItems = (inView) => {
-  //   if (inView && !isNextPageLoading) loadNextPage();
-  // };
 
   useEffect(() => {
     if (inView && !isNextPageLoading) loadNextPage();
@@ -53,8 +50,8 @@ const CustomGrid = ({
     return items.map((item, index) => {
       if (index === items.length - 1) {
         return (
-          <div ref={ref}>
-            <StyledLink to={`/anime/${item.id}`} key={item.id}>
+          <div ref={ref} key={item.id}>
+            <StyledLink to={`/anime/${item.id}`}>
               <Item item={item} />
             </StyledLink>
           </div>

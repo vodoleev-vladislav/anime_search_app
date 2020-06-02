@@ -7,14 +7,20 @@ import Item from "../Item/Item";
 import StyledLink from "../Link/StyledLink";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Rating from "../Rating/Rating";
+import Loader from "../Loader/Loader";
 
 const getAltTitles = ({ titles, canonicalTitle }) => {
   const altTitles = Object.keys(titles).reduce((result, key) => {
-    if (titles[key] === canonicalTitle || key.includes("ja")) {
+    if (
+      titles[key] === canonicalTitle ||
+      key.includes("ja") ||
+      result.map((item) => item.title).includes(titles[key])
+    ) {
       return result;
     }
-    return result.concat(key);
+    return result.concat({ lang: key, title: titles[key] });
   }, []);
+  console.log(altTitles);
   return altTitles;
 };
 
@@ -47,94 +53,84 @@ const ItemPage = (props) => {
   };
 
   if (!details) {
-    return <div>Loading...</div>;
+    return (
+      <ItemPageStyled>
+        <Loader />
+      </ItemPageStyled>
+    );
   } else {
     return (
-      <>
-        <ItemPageStyled
-          background={
-            details.attributes.coverImage &&
-            details.attributes.coverImage.original
-          }
-        >
-          <div className="poster__container">
-            <img
-              className="poster"
-              src={details.attributes.posterImage.medium}
-              alt="poster"
-            />
+      <ItemPageStyled
+        background={
+          details.attributes.coverImage &&
+          details.attributes.coverImage.original
+        }
+      >
+        <div className="poster__container">
+          <img
+            className="poster"
+            src={details.attributes.posterImage.medium}
+            alt="poster"
+          />
+        </div>
+
+        <div className="details">
+          <div className="details__title">
+            <h3 className="details__title-main">
+              {details.attributes.canonicalTitle}
+            </h3>
+            <ul className="details__title-alts">
+              {altTitles &&
+                altTitles.map((item) => (
+                  <li key={item.lang} className="details__title-alt">
+                    <strong>{item.lang.toUpperCase()}: </strong>
+                    {item.title}
+                  </li>
+                ))}
+            </ul>
           </div>
 
-          <div className="details">
-            <div className="details__title">
-              <h3 className="details__title-main">
-                {details.attributes.canonicalTitle}
-              </h3>
-              <ul className="details__title-alts">
-                {altTitles &&
-                  altTitles.map((key) => (
-                    <li key={key} className="details__title-alt">
-                      <strong>{key.toUpperCase()}: </strong>
-                      {details.attributes.titles[key]}
-                    </li>
-                  ))}
-              </ul>
-            </div>
+          <p>
+            <strong>Show Type: </strong>
+            {details.attributes.showType}
+          </p>
 
-            <p>
-              <strong>Show Type: </strong>
-              {details.attributes.showType}
-            </p>
+          <p>
+            <strong>Status:</strong>{" "}
+            {details.attributes.status === "current"
+              ? "ongoing"
+              : details.attributes.status}
+          </p>
 
+          {details.attributes.episodeCount && (
             <p>
-              <strong>Status:</strong>{" "}
-              {details.attributes.status === "current"
-                ? "ongoing"
-                : details.attributes.status}
+              <strong>Episodes:</strong> {details.attributes.episodeCount}
             </p>
+          )}
 
-            {details.attributes.episodeCount && (
-              <p>
-                <strong>Episodes:</strong> {details.attributes.episodeCount}
-              </p>
-            )}
-
-            <p className="details__age-rating">
-              <strong>Age Rating:</strong> {details.attributes.ageRating} -{" "}
-              {details.attributes.ageRatingGuide}
+          <p className="details__age-rating">
+            <strong>Age Rating:</strong> {details.attributes.ageRating} -{" "}
+            {details.attributes.ageRatingGuide}
+          </p>
+          <p>
+            <strong>Start Date:</strong>{" "}
+            {formatDate(details.attributes.startDate)}
+          </p>
+          <p>
+            <strong>End Date:</strong> {formatDate(details.attributes.endDate)}
+          </p>
+          <div className="details__rating-box">
+            <Rating rating={details.attributes.averageRating} />
+            <p className="details__rating-text">
+              User
+              <br />
+              Score
             </p>
-            <p>
-              <strong>Start Date:</strong>{" "}
-              {formatDate(details.attributes.startDate)}
-            </p>
-            <p>
-              <strong>End Date:</strong>{" "}
-              {formatDate(details.attributes.endDate)}
-            </p>
-            <div className="details__rating-box">
-              <Rating rating={details.attributes.averageRating} />
-              <p className="details__rating-text">
-                User
-                <br />
-                Score
-              </p>
-            </div>
-            <p className="details__overview">Overview</p>
-            <p>{details.attributes.synopsis}</p>
           </div>
-        </ItemPageStyled>
-        {/* <div style={{ display: "flex" }}>
-          {props.items.slice(0, 3).map((item) => (
-            <StyledLink
-              to={`/title/${item.id}`}
-              key={item.id}
-              onClick={() => setDetails(null)}
-            >
-              <Item item={item} />
-            </StyledLink>
-          ))}
-        </div> */}
-      </>
+          <p className="details__overview">Overview</p>
+          <p>{details.attributes.synopsis}</p>
+        </div>
+      </ItemPageStyled>
     );
   }
 };

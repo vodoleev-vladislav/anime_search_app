@@ -11,8 +11,8 @@ const switchRule = `
 
 function glide(val) {
   return spring(val, {
-    stiffness: 174,
-    damping: 24,
+    stiffness: 250,
+    damping: 25,
   });
 }
 
