@@ -48,7 +48,7 @@ const CustomGrid = ({
       );
     }
     return items.map((item, index) => {
-      if (index === items.length - 1) {
+      if (index === items.length - 1 && hasNextPage) {
         return (
           <div ref={ref} key={item.id}>
             <StyledLink to={`/anime/${item.id}`}>
@@ -68,7 +68,7 @@ const CustomGrid = ({
   return (
     <GridStyled background={bg}>
       {renderGridContent()}
-      {isNextPageLoading && items.length !== 0 && <Item />}
+      {isNextPageLoading && hasNextPage && items.length !== 0 && <Item />}
     </GridStyled>
   );
 };

@@ -1,18 +1,20 @@
 import React, { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import SearchStyled from "./SearchStyled";
 import Logo from "../Logo/Logo";
 import { default as StyledLink } from "../Link/StyledLink";
 import sprite from "../../sprite.svg";
 
 const Search = ({ setSearch }) => {
+  let history = useHistory();
   const [query, setQuery] = useState("");
   const timeout = useRef(null);
 
-  const setQueryTimeout = ({ target: { value } }) => {
+  const handleChange = ({ target: { value } }) => {
     clearTimeout(timeout.current);
     setQuery(value);
 
-    timeout.current = setTimeout(() => setSearch(value), 1000);
+    timeout.current = setTimeout(() => setSearchQuery(value), 1000);
   };
 
   const handleKeyPress = (event) => {
@@ -20,8 +22,13 @@ const Search = ({ setSearch }) => {
       const { value } = event.target;
       clearTimeout(timeout.current);
       setQuery(value);
-      setSearch(value);
+      setSearchQuery(value);
     }
+  };
+
+  const setSearchQuery = (value) => {
+    setSearch(value);
+    history.push("/");
   };
 
   return (
@@ -33,9 +40,9 @@ const Search = ({ setSearch }) => {
         <input
           className="query"
           value={query}
-          onChange={setQueryTimeout}
+          onChange={handleChange}
           onKeyPress={handleKeyPress}
-        ></input>
+        />
         <svg className="icon">
           <use href={`${sprite}#icon-search`} />
         </svg>

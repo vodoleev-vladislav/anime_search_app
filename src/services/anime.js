@@ -2,25 +2,22 @@ import axios from "axios";
 
 const BASE_URL = "https://kitsu.io/api/edge/anime";
 const PER_PAGE = 10;
-const LIMIT = "";
 
 export const getPopularTitles = async (page) => {
   const queryString = `${BASE_URL}?&page[offset]=${
     page * PER_PAGE
   }&sort=-averageRating`;
   const response = await axios.get(queryString);
-  const hasNextPage = response.data.links.last !== queryString;
-  console.log("RETURNING NEW PAGE!!!!!!!!!", "page is", page);
+  const hasNextPage = response.data.data.length !== 0;
   return { animelist: response.data.data, hasNextPage };
 };
 
 export const getTitlesByQuery = async (query, page) => {
   const queryString = `${BASE_URL}?page[offset]=${
     page * PER_PAGE
-  }&${LIMIT}&filter[text]=${query}`;
+  }&filter[text]=${query}`;
   const response = await axios.get(queryString);
-  const hasNextPage = response.data.links.last !== queryString;
-  console.log("RETURNING NEW PAGE!!!!!!!!!", "page is", page);
+  const hasNextPage = response.data.data.length !== 0;
   return { animelist: response.data.data, hasNextPage };
 };
 
