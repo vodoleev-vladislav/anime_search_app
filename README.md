@@ -1,6 +1,6 @@
 ## A React app, which uses kitsu.io api to help you search for anime to watch! 
 
-###View [live](https://vv-animesearch.netlify.app/)
+### View [live](https://vv-animesearch.netlify.app/)
 
 
 
