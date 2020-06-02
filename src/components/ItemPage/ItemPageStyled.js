@@ -18,12 +18,11 @@ export default styled.div`
   font-family: "Asap", sans-serif;
   color: #fff;
   font-size: ${(props) => props.theme.fontSizes.small};
-  min-height: 95vh;
+  min-height: calc(100vh - ${({ theme }) => theme.heights.header});
 
   .poster {
     min-width: 25vw;
     width: 100%;
-    /* max-height: 100%; */
     height: auto;
     border-radius: 1rem;
 

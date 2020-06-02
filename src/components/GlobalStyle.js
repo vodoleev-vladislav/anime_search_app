@@ -17,7 +17,7 @@ html {
     font-size: 50%;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mediumSmall}) {
-    font-size: 43.75%;
+    font-size: 37.5%;
   }
 }
 `;

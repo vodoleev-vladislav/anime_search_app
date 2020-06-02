@@ -13,10 +13,10 @@ const theme = {
     large: "3rem",
   },
   breakpoints: {
-    large: "1700px",
-    medium: "1100px",
-    mediumSmall: "900px",
-    small: "680px",
+    large: "103em",
+    medium: "69em",
+    mediumSmall: "56em",
+    small: "42em",
   },
   heights: {
     header: "6rem",

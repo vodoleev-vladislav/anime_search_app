@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import SearchStyled from "./SearchStyled";
+import HeaderStyled from "./HeaderStyled";
 import Logo from "../Logo/Logo";
 import { default as StyledLink } from "../Link/StyledLink";
 import sprite from "../../sprite.svg";
 
-const Search = ({ setSearch }) => {
+const Header = ({ setSearch }) => {
   let history = useHistory();
   const [query, setQuery] = useState("");
   const timeout = useRef(null);
@@ -32,7 +32,7 @@ const Search = ({ setSearch }) => {
   };
 
   return (
-    <SearchStyled>
+    <HeaderStyled>
       <StyledLink to="/">
         <Logo />
       </StyledLink>
@@ -47,8 +47,8 @@ const Search = ({ setSearch }) => {
           <use href={`${sprite}#icon-search`} />
         </svg>
       </div>
-    </SearchStyled>
+    </HeaderStyled>
   );
 };
 
-export default Search;
+export default Header;

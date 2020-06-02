@@ -17,7 +17,7 @@ const ItemStyled = styled.div`
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.small}) {
-    width: max(48rem, 80vw);
+    width: max(45rem, 90vw);
   }
 
   &:hover {

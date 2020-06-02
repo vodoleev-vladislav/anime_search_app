@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SearchStyled = styled.header`
+const HeaderStyled = styled.header`
   position: fixed;
   z-index: 1;
   width: 100%;
@@ -19,6 +19,11 @@ const SearchStyled = styled.header`
 
     background-image: none;
     box-shadow: none;
+    font-family: "Asap", sans-serif;
+
+    @media (max-width: ${(props) => props.theme.breakpoints.small}) {
+      width: 20rem;
+    }
 
     &__container {
       position: relative;
@@ -41,4 +46,4 @@ const SearchStyled = styled.header`
   }
 `;
 
-export default SearchStyled;
+export default HeaderStyled;

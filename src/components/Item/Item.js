@@ -1,4 +1,5 @@
 import React from "react";
+import { shortenTitle, formatDate } from "../../services/utility";
 import ItemStyled from "./ItemStyled";
 import Rating from "../Rating/Rating";
 import Loader from "../Loader/Loader";
@@ -12,18 +13,13 @@ const Item = ({ item }) => {
     );
   }
 
-  const startDate = new Date(item.attributes.startDate);
-  const formattedDate = startDate.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
   return (
     <ItemStyled>
       <img src={item.attributes.posterImage.small} alt="anime"></img>
       <div className="info">
-        <div className="info__title">{item.attributes.canonicalTitle}</div>
+        <div className="info__title">
+          {shortenTitle(item.attributes.canonicalTitle)}
+        </div>
         <div className="info__bottom">
           <div className="info__details">
             <p>
@@ -45,7 +41,7 @@ const Item = ({ item }) => {
               <strong>Age Rating:</strong> {item.attributes.ageRating}
             </p>
             <p>
-              <strong>Start:</strong> {formattedDate}
+              <strong>Start:</strong> {formatDate(item.attributes.startDate)}
             </p>
           </div>
           <div className="info__rating-box">

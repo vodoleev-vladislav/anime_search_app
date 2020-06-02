@@ -1,5 +1,5 @@
 import React from "react";
-import Search from "./Search/Search";
+import Header from "./Header/Header";
 import { getPopularTitles, getTitlesByQuery } from "../services/anime";
 import Grid from "./Grid/Grid";
 import ItemPage from "../components/ItemPage/ItemPage";
@@ -55,7 +55,7 @@ class App extends React.Component {
       <Theme>
         <GlobalStyle />
         <Router>
-          <Search setSearch={this.setSearch} />
+          <Header setSearch={this.setSearch} />
           <AnimatedSwitch>
             <Route path="/anime/:id">
               <ItemPage items={animelist} />

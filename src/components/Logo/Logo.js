@@ -11,10 +11,9 @@ const Logo = () => {
 };
 
 const LogoStyled = styled.h1`
-  font-size: 3rem;
+  font-size: 5rem;
   font-family: "Permanent Marker", cursive;
   margin-left: 2rem;
-  /* margin-right: 30vw; */
 
   .first-word {
     color: ${(props) => props.theme.colors.secondary};

@@ -1,53 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getTitleById } from "../../services/anime";
+import { getAltTitles, formatDate } from "../../services/utility";
 import ItemPageStyled from "./ItemPageStyled";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Rating from "../Rating/Rating";
 import Loader from "../Loader/Loader";
 
-const getAltTitles = ({ titles, canonicalTitle }) => {
-  const altTitles = Object.keys(titles).reduce((result, key) => {
-    if (
-      titles[key] === canonicalTitle ||
-      key.includes("ja") ||
-      result.map((item) => item.title).includes(titles[key])
-    ) {
-      return result;
-    }
-    return result.concat({ lang: key, title: titles[key] });
-  }, []);
-  console.log(altTitles);
-  return altTitles;
-};
-
 const ItemPage = (props) => {
   const { id } = useParams();
   const [details, setDetails] = useState(null);
+
   useEffect(() => {
     (async () => {
       const item = props.items.find((item) => item.id === id);
       if (!item) {
-        console.log("fetching from api");
         const response = await getTitleById(id);
         setDetails(response);
       } else {
-        console.log("getting from state");
         setDetails(item);
       }
     })();
   }, [id, props.items]);
 
   const altTitles = details ? getAltTitles(details.attributes) : null;
-  const formatDate = (date) => {
-    const startDate = new Date(date);
-    const formattedDate = startDate.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-    return formattedDate;
-  };
 
   if (!details) {
     return (
