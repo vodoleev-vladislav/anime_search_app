@@ -18,6 +18,9 @@ const theme = {
     mediumSmall: "900px",
     small: "680px",
   },
+  heights: {
+    header: "6rem",
+  },
 };
 
 const Theme = ({ children }) => (

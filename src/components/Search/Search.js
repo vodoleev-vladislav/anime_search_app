@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import SearchStyled from "./SearchStyled";
 import Logo from "../Logo/Logo";
 import { default as StyledLink } from "../Link/StyledLink";
+import sprite from "../../sprite.svg";
 
 const Search = ({ setSearch }) => {
   const [query, setQuery] = useState("");
@@ -11,7 +12,16 @@ const Search = ({ setSearch }) => {
     clearTimeout(timeout.current);
     setQuery(value);
 
-    timeout.current = setTimeout(() => setSearch(value), 500);
+    timeout.current = setTimeout(() => setSearch(value), 1000);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      const { value } = event.target;
+      clearTimeout(timeout.current);
+      setQuery(value);
+      setSearch(value);
+    }
   };
 
   return (
@@ -19,11 +29,17 @@ const Search = ({ setSearch }) => {
       <StyledLink to="/">
         <Logo />
       </StyledLink>
-      <input
-        value={query}
-        onChange={setQueryTimeout}
-        style={{ display: "block" }}
-      />
+      <div className="query__container">
+        <input
+          className="query"
+          value={query}
+          onChange={setQueryTimeout}
+          onKeyPress={handleKeyPress}
+        ></input>
+        <svg className="icon">
+          <use href={`${sprite}#icon-search`} />
+        </svg>
+      </div>
     </SearchStyled>
   );
 };

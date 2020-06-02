@@ -3,7 +3,7 @@ import Search from "./Search/Search";
 import { getPopularTitles, getTitlesByQuery } from "../services/anime";
 import Grid from "./Grid/Grid";
 import ItemPage from "../components/ItemPage/ItemPage";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { uniqWith } from "lodash";
 import AnimatedSwitch from "./AnimatedSwitch/AnimatedSwitch";
 import Theme from "./Theme";
@@ -34,7 +34,6 @@ class App extends React.Component {
           [...this.state.animelist, ...response.animelist],
           (a, b) => a.id === b.id
         ),
-        // animelist: [...this.state.animelist, ...response.animelist],
         hasNextPage: response.hasNextPage,
       });
     }
