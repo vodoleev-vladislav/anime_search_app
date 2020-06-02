@@ -83,7 +83,6 @@ export default styled.div`
       background-size: cover;
       background-position: center;
       padding: 2rem;
-      /* padding-top: 4rem; */
     }
   }
 `;

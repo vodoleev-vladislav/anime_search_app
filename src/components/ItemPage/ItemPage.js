@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import displayTitleName from "../../services/displayTitleName";
 import { getTitleById } from "../../services/anime";
 import ItemPageStyled from "./ItemPageStyled";
-import Item from "../Item/Item";
-import StyledLink from "../Link/StyledLink";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Rating from "../Rating/Rating";
 import Loader from "../Loader/Loader";

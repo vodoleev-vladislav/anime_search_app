@@ -49,11 +49,6 @@ const Item = ({ item }) => {
             </p>
           </div>
           <div className="info__rating-box">
-            {/* <p className="info__rating-text">
-              User
-              <br />
-              score
-            </p> */}
             <Rating rating={item.attributes.averageRating} />
           </div>
         </div>

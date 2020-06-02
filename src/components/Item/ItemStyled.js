@@ -2,15 +2,12 @@ import styled from "styled-components";
 
 const ItemStyled = styled.div`
   display: flex;
-  /* background-color: #eee; */
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 2rem;
   border: 1px solid black;
   padding: 1rem;
   height: 30rem;
   width: max(40rem, 30vw);
-  /* height: 30vh;
-  width: 30vw; */
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
   transition: all 0.2s;
   font-family: "Asap", sans-serif;
@@ -52,8 +49,6 @@ const ItemStyled = styled.div`
     &__title {
       font-size: ${(props) => props.theme.fontSizes.large};
       font-weight: 700;
-      /* display: block; */
-      /* align-self: center; */
       text-align: center;
       margin-bottom: auto;
     }
@@ -62,7 +57,6 @@ const ItemStyled = styled.div`
       display: flex;
       align-items: center;
       flex-direction: column;
-      /* margin-right: 1rem; */
     }
 
     &__rating-text {
