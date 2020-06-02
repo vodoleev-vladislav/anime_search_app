@@ -1,3 +1,9 @@
+## A React app, which uses kitsu.io api to help you search for anime to watch! 
+
+###View [live](https://vv-animesearch.netlify.app/)
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
